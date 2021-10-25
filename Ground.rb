@@ -27,7 +27,7 @@ class Ground
         deltaX = right[0]-left[0]
         along = (x-left[0])/deltaX
         deltay = left[1]-right[1]
-        return left[1]+deltay*along
+        return left[1]-deltay*along
     end
 
     def draw()
@@ -47,15 +47,15 @@ class Ground
     def leftVertex(x)
         for i in 0..@vertex.length()
             if @vertex[i][0] > x
-                return @vertex[i-2]
+                return @vertex[i-1]
             end
         end
     end
     
     def rightVertex(x)
-        @vertex.each do |vertex|
-            if vertex[0] >= x
-                return vertex
+        for i in 0..@vertex.length()
+            if @vertex[i][0] >= x
+                return @vertex[i]
             end
         end
     end
