@@ -7,8 +7,8 @@ class Rock
         @window = window
         @size = (rand()+0.5)*size
         @img = Gosu::Image.new(img)
-        @x = x - @img.width*@size/2
-        @y = y - @img.height*@size/2
+        @x = x-(@img.width*@size)*0.5
+        @y = y-(@img.height*@size)*0.5+15
         @z = z
     end
 
@@ -19,17 +19,13 @@ end
 
 class Rockscater
 
-    def initialize(window,ground,amount,refRock)
+    def initialize(window,ground,amount,z,size,img)
         @window = window
         @ground = ground
         @rockAry = Array.new(amount) do |rock|
-            rock = refRock.dup
-            rock.x = rand()*window.width
-            rock.y = window.height - ground.groundY(rock.x)
-            rock
+            tmp=rand()*window.width
+            Rock.new(window,tmp,window.height - ground.groundY(tmp),z,size,img)
         end
-        puts @rockAry[0].x
-        puts @rockAry[0].y
     end
 
     def draw()
