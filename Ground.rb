@@ -45,18 +45,20 @@ class Ground
 
 
     def leftVertex(x)
-        for i in 0..@vertex.length()
+        for i in 0..@vertex.length()-1
             if @vertex[i][0] > x
                 return @vertex[i-1]
             end
         end
+        @vertex[-1]
     end
     
     def rightVertex(x)
-        for i in 0..@vertex.length()
+        for i in 0..@vertex.length()-1
             if @vertex[i][0] >= x
                 return @vertex[i]
             end
         end
+        @vertex[-1]
     end
 end
