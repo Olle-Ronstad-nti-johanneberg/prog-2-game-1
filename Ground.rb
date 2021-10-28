@@ -43,7 +43,7 @@ class Ground
 
 
     def leftVertex(x)
-        for i in 0..@vertex.length()-1
+        @vertex.each_with_index do |vertex, i|
             if @vertex[i][0] > x
                 return @vertex[i-1]
             end
@@ -52,9 +52,9 @@ class Ground
     end
     
     def rightVertex(x)
-        for i in 0..@vertex.length()-1
-            if @vertex[i][0] >= x
-                return @vertex[i]
+        @vertex.each do |vertex|
+            if vertex[0] >= x
+                return vertex
             end
         end
         @vertex[-1]
