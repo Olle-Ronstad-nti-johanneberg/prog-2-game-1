@@ -8,7 +8,7 @@ class Rock
         @size = (rand()+0.5)*size
         @img = Gosu::Image.new(img)
         @x = x-(@img.width*@size)*0.5
-        @y = y-(@img.height*@size)*0.5+15
+        @y = y-(@img.height*@size)*0.5
         @z = z
     end
 
