@@ -31,10 +31,10 @@ class Ground
     def draw()
         for i in 0..@vertex.length-2
             @window.draw_quad(
-                @vertex[i][0], 480-@vertex[i][1],@topColor,
-                @vertex[i+1][0], 480-@vertex[i+1][1],@topColor,
-                @vertex[i][0],480,@botomColor,
-                @vertex[i+1][0], 480,@botomColor
+                @vertex[i][0], @window.height-@vertex[i][1],@topColor,
+                @vertex[i+1][0], @window.height-@vertex[i+1][1],@topColor,
+                @vertex[i][0],@window.height,@botomColor,
+                @vertex[i+1][0], @window.height,@botomColor
             )
         end
     end
