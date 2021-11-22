@@ -8,7 +8,7 @@ class StartMenu
     def initialize(window)
         @window = window
         @levelsPath = Dir.children('./Level Data')
-        @levels = Dir.children('./Level Data').map do |name|
+        @levels = @levelsPath.map do |name|
             Gosu::Image.from_text(name.gsub(".csv",""),LEVELFONTSIZE, {bold: true})
         end
         @maintext = Gosu::Image.from_text("LUNAR GAME",MAINFONTSIZE, {bold: true, font: "impact"})
