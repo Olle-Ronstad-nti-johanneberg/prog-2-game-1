@@ -5,7 +5,7 @@ require_relative 'Level.rb'
 
 class Main < Gosu::Window
     def initialize
-        super(640, 480)
+        super(1280, 720)
         @level = nil
         @startmenu = StartMenu.new(self)
         @state = "startMenu"
