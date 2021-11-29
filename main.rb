@@ -8,8 +8,10 @@ class Main < Gosu::Window
         super(1280, 720)
         @level = nil
         @startmenu = StartMenu.new(self)
+        @player = nil
         @state = "startMenu"
         @pressed = false
+        @font = Gosu::Font.new(50, name: "Comic Sans MS")
     end
 
     def update
@@ -17,6 +19,7 @@ class Main < Gosu::Window
         when "startMenu"
             if (button_down?(Gosu::MS_LEFT)) && !@startmenu.path.nil?
                 @level = Level.new(self,"Level data/#{@startmenu.path}")
+                @player = Player.new(self.height, self.width, @level.ground)
                 @state = "level"
             end
             if button_down?(Gosu::KB_DOWN)||button_down?(Gosu::KB_S)
@@ -37,7 +40,13 @@ class Main < Gosu::Window
             end
              
         when "level"
+            @player.update
             puts "in level"
+        end
+
+        if Gosu.button_down?(Gosu::KbEscape)
+            close
+            puts "Game closed!"
         end
     end
 
@@ -48,6 +57,8 @@ class Main < Gosu::Window
             @startmenu.draw
         when "level"
             @level.draw
+            @player.draw
+            @font.draw_text(@startmenu.hoveringOverPath.gsub(".csv",""), 0, 0, 0)
         end
     end
 end
