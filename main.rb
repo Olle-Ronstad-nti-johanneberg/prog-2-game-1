@@ -2,6 +2,7 @@ require 'Gosu'
 
 require_relative 'startmenu'
 require_relative 'Level.rb'
+require_relative 'player.rb'
 
 class Main < Gosu::Window
     def initialize
@@ -58,7 +59,7 @@ class Main < Gosu::Window
         when "level"
             @level.draw
             @player.draw
-            @font.draw_text(@startmenu.hoveringOverPath.gsub(".csv",""), 0, 0, 0)
+            @font.draw_text(@startmenu.path.gsub(".csv",""), 0, 0, 0)
         end
     end
 end
