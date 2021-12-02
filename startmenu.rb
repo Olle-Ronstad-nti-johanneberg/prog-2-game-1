@@ -1,4 +1,4 @@
-require 'Gosu'
+require 'gosu'
 
 MAINFONTSIZE = 75
 LEVELFONTSIZE = 20
@@ -7,7 +7,7 @@ LEVELFONTTEXTSPACING = 5
 class StartMenu
     def initialize(window)
         @window = window
-        @levelsPath = Dir.children('./Level Data')
+        @levelsPath = Dir.children('Level data')
         @levels = @levelsPath.map do |name|
             Gosu::Image.from_text(name.gsub(".csv",""),LEVELFONTSIZE, {bold: true, font:"impact"})
         end

@@ -1,5 +1,5 @@
 require 'byebug'
-require 'Gosu'
+require 'gosu'
 
 
 class Ground

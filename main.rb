@@ -1,4 +1,4 @@
-require 'Gosu'
+require 'gosu'
 
 require_relative 'startmenu'
 require_relative 'Level.rb'
