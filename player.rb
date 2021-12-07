@@ -1,5 +1,8 @@
 require 'gosu'
 
+# lower numbers gives higer prcision at the cost of preformance
+COLLISION_DETAIL = 0.05
+
 class Player < Gosu::Window
 
     attr_accessor :gravity
@@ -31,7 +34,10 @@ class Player < Gosu::Window
             @img_y = 30
             @vel_y = 0
         elsif @img_y > @height-@ground.groundY(@img_x) - 30
-            @img_y = @height-@ground.groundY(@img_x) - 30
+            while @img_y > @height-@ground.groundY(@img_x) - 30
+                @img_y -= @vel_y * COLLISION_DETAIL
+                @img_x -= @vel_x * COLLISION_DETAIL
+            end
             @vel_y = 0
             @vel_x = 0
         end
