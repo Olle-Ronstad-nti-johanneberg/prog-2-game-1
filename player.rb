@@ -3,14 +3,11 @@ require 'gosu'
 # lower numbers gives higer prcision at the cost of preformance
 COLLISION_DETAIL = 0.05
 
-class Player < Gosu::Window
+class Player
 
     attr_accessor :gravity
 
     def initialize(height, width, ground)
-        # super(800, 600)
-        # self.caption = "Player"
-        # @background = Gosu::Color::WHITE
         @player = Gosu::Image.load_tiles('Sprite-rocket.png', 32, 32, options = {retro: true})
         @img_x = 0
         @img_y = 0
