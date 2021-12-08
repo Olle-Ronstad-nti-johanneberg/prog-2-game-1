@@ -18,6 +18,7 @@ class StartMenu
         @menuid = nil
         @last_x = 0
         @last_y = 0
+        @pressed = false
     end
 
     def draw
@@ -38,6 +39,25 @@ class StartMenu
 
     end
 
+    def update
+        if Gosu.button_down?(Gosu::KB_DOWN)||Gosu.button_down?(Gosu::KB_S)
+            if !@pressed
+                menuselectdown()
+                @pressed = true
+            end
+        end 
+        if Gosu.button_down?(Gosu::KB_UP)||Gosu.button_down?(Gosu::KB_W)
+            if !@pressed
+                menuselectup()
+                @pressed = true
+            end
+        end
+        
+        if !(Gosu.button_down?(Gosu::KB_UP)||Gosu.button_down?(Gosu::KB_W)||Gosu.button_down?(Gosu::KB_DOWN)||Gosu.button_down?(Gosu::KB_S))
+            @pressed = false
+        end
+    end
+    
     def path
         if @menuid.nil?
             return nil
@@ -46,6 +66,8 @@ class StartMenu
         end
     end
 
+    private
+    
     def menuselectdown()
         if @menuid.nil?
             @menuid = 0
@@ -78,7 +100,6 @@ class StartMenu
     end
 
 
-    private
 
     def idHoveringOver
         if @window.mouse_x > @window.width/4 && @window.mouse_x < @window.width/4*3

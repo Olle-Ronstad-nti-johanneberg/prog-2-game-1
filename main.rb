@@ -18,31 +18,15 @@ class Main < Gosu::Window
     def update
         case @state
         when "startMenu"
-            if (button_down?(Gosu::MS_LEFT)) && !@startmenu.path.nil?
+            @startmenu.update
+            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@startmenu.path.nil?
                 @level = Level.new(self,"Level data/#{@startmenu.path}")
                 @player = Player.new(self.height, self.width, @level.ground)
                 @state = "level"
             end
-            if button_down?(Gosu::KB_DOWN)||button_down?(Gosu::KB_S)
-                if !@pressed
-                    @startmenu.menuselectdown
-                    @pressed = true
-                end
-            end 
-            if button_down?(Gosu::KB_UP)||button_down?(Gosu::KB_W)
-                if !@pressed
-                    @startmenu.menuselectup
-                    @pressed = true
-                end
-            end
 
-            if !(button_down?(Gosu::KB_UP)||button_down?(Gosu::KB_W)||button_down?(Gosu::KB_DOWN)||button_down?(Gosu::KB_S))
-                @pressed = false
-            end
-             
         when "level"
             @player.update
-            puts "in level"
         end
 
         if Gosu.button_down?(Gosu::KbEscape)
