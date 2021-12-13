@@ -2,4 +2,4 @@ ground,Ground data/level1.csv
 topColor,#ffffffff
 botomColor,#00000000
 rockIMG,nedladdning.jpg
-grav,9.81
+grav,0.1

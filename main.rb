@@ -13,6 +13,7 @@ class Main < Gosu::Window
         @state = "startMenu"
         @pressed = false
         @font = Gosu::Font.new(50, name: "Comic Sans MS")
+        @timer = 300
     end
 
     def update
@@ -21,12 +22,19 @@ class Main < Gosu::Window
             @startmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@startmenu.path.nil?
                 @level = Level.new(self,"Level data/#{@startmenu.path}")
-                @player = Player.new(self.height, self.width, @level.ground)
+                @player = Player.new(self.height, self.width, @level.ground, @level.data)
                 @state = "level"
             end
 
         when "level"
             @player.update
+            if (@level.ground.angle(@player.img_x) < @player.angle+10 && @level.ground.angle(@player.img_x) > @player.angle-10) && @player.vel_y == 0 && @player.vel_x == 0
+                @state = "gameOver"
+                @timer = 300
+            end
+
+        when "gameOver"
+            @timer -= 1
         end
 
         if Gosu.button_down?(Gosu::KbEscape)
@@ -44,6 +52,13 @@ class Main < Gosu::Window
             @level.draw
             @player.draw
             @font.draw_text(@startmenu.path.gsub(".csv",""), 0, 0, 0)
+        when "gameOver"
+            @font.draw_text("Congrats, you finished the level!", 0, 0, 0)
+            @level.draw
+            @player.draw
+            if @timer == 0
+                @state = "startMenu"
+            end
         end
     end
 end
