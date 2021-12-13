@@ -5,6 +5,8 @@ require_relative 'Ground.rb'
 require_relative 'Rockscater'
 
 class Level
+    attr_accessor :data
+
     def initialize(window,levelpath)
         @window = window
         @data = {}
