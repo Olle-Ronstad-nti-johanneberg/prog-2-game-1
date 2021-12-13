@@ -28,7 +28,7 @@ class Main < Gosu::Window
 
         when "level"
             @player.update
-            if (@level.ground.angle(@player.img_x) < @player.angle+10 && @level.ground.angle(@player.img_x) > @player.angle-10) && @player.vel_y == 0 && @player.vel_x == 0
+            if (@level.ground.angle(@player.img_x) < @player.angle+10 && @level.ground.angle(@player.img_x) > @player.angle-10) && @player.co
                 @state = "gameOver"
                 @timer = 300
             end

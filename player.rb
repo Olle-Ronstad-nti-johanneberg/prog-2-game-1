@@ -24,15 +24,18 @@ class Player
         @animation_state = 0
         @moving = false
     end
-    
-    
+
+    def colliding()
+        @img_y > @height-@ground.groundY(@img_x) - 18
+    end
+
     def update
         @vel_y += @gravity
         @angle = @angle%360
         if @img_y < 30
             @img_y = 30
             @vel_y = 0
-        elsif @img_y > @height-@ground.groundY(@img_x) - 18
+        elsif colliding()
             while @img_y > @height-@ground.groundY(@img_x) - 18
                 @img_y -= @vel_y * COLLISION_DETAIL
                 @img_x -= @vel_x * COLLISION_DETAIL
