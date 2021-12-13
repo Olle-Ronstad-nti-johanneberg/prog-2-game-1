@@ -5,6 +5,7 @@ require_relative 'Ground.rb'
 require_relative 'Rockscater'
 
 class Level
+    attr_reader :ground
     attr_accessor :data
 
     def initialize(window,levelpath)
@@ -20,11 +21,7 @@ class Level
         @ground = Ground.new(@window,@data[:ground],Hex(@data[:topColor]),Hex(@data[:botomColor]))
         @rockscater = Rockscater.new(@window,@ground,20,1,0.1,@data[:rockIMG])
     end
-
-    def ground
-        return @ground
-    end
-
+    
     def draw()
         @ground.draw
         @rockscater.draw
