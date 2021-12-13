@@ -39,6 +39,12 @@ class Ground
         end
     end
 
+    def angle(x)
+        left = leftVertex(x)
+        right = rightVertex(x)
+        angel = (-Math::tanh((left[1]-right[1])/(left[0]-right[0]))*(180/Math::PI))%360
+    end
+
     private
 
 
