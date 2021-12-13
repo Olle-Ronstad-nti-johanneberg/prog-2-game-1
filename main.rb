@@ -28,12 +28,15 @@ class Main < Gosu::Window
 
         when "level"
             @player.update
-            if (@level.ground.angle(@player.img_x) < @player.angle+10 && @level.ground.angle(@player.img_x) > @player.angle-10) && @player.co
+            if (@level.ground.angle(@player.img_x) < @player.angle+10 && @level.ground.angle(@player.img_x) > @player.angle-10) && @player.colliding
                 @state = "gameOver"
                 @timer = 300
             end
 
         when "gameOver"
+            if (button_down?(Gosu::KB_RETURN))
+                @state = "startMenu"
+            end
             @timer -= 1
         end
 
