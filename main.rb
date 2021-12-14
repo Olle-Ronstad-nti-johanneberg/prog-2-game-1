@@ -35,6 +35,9 @@ class Main < Gosu::Window
 
         when "gameOver"
             if (button_down?(Gosu::KB_RETURN))
+                @timer = 1
+            end
+            if @timer == 0
                 @state = "startMenu"
             end
             @timer -= 1
@@ -59,9 +62,6 @@ class Main < Gosu::Window
             @font.draw_text("Congrats, you finished the level!", 0, 0, 0)
             @level.draw
             @player.draw
-            if @timer == 0
-                @state = "startMenu"
-            end
         end
     end
 end
