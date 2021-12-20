@@ -23,16 +23,21 @@ class Main < Gosu::Window
         case @state
         when "startMenu"
             @startmenu.update
-            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN))
+            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
                 @state = @startmenu.newState
                 @pressed = true
             end
         when "levelMenu"
             @levelmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@levelmenu.path.nil? && @pressed == false
-                @level = Level.new(self,"Level data/#{@levelmenu.path}")
-                @player = Player.new(self.height, self.width, @level.ground, @level.data)
-                @state = "level"
+                if @levelmenu.path == "Back"
+                    @state = "startMenu"
+                else
+                    @level = Level.new(self,"Level data/#{@levelmenu.path}")
+                    @player = Player.new(self.height, self.width, @level.ground, @level.data)
+                    @state = "level"
+                end
+                @pressed = true
             end
 
         when "level"
@@ -50,6 +55,8 @@ class Main < Gosu::Window
                 @state = "startMenu"
             end
             @timer -= 1
+        when "exit"
+            close
         end
 
         if !(button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN))
