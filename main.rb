@@ -1,7 +1,7 @@
 require 'gosu'
 
 require_relative 'levelMenu.rb'
-#require_relative 'startMenu.rb'
+require_relative 'startmenu.rb'
 require_relative 'Level.rb'
 require_relative 'player.rb'
 
@@ -11,6 +11,7 @@ class Main < Gosu::Window
         self.caption = "Lunar Game"
         @level = nil
         @levelmenu = LevelMenu.new(self)
+        @startmenu = StartMenu.new(self)
         @player = nil
         @state = "startMenu"
         @pressed = false
@@ -21,8 +22,14 @@ class Main < Gosu::Window
     def update
         case @state
         when "startMenu"
+            @startmenu.update
+            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN))
+                @state = @startmenu.newState
+                @pressed = true
+            end
+        when "levelMenu"
             @levelmenu.update
-            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@levelmenu.path.nil?
+            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@levelmenu.path.nil? && @pressed == false
                 @level = Level.new(self,"Level data/#{@levelmenu.path}")
                 @player = Player.new(self.height, self.width, @level.ground, @level.data)
                 @state = "level"
@@ -45,6 +52,9 @@ class Main < Gosu::Window
             @timer -= 1
         end
 
+        if !(button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN))
+            @pressed = false
+        end
         if Gosu.button_down?(Gosu::KbEscape)
             close
             puts "Game closed!"
@@ -55,6 +65,8 @@ class Main < Gosu::Window
     def draw
         case @state
         when "startMenu"
+           @startmenu.draw 
+        when "levelMenu"
             @levelmenu.draw
         when "level"
             @level.draw
