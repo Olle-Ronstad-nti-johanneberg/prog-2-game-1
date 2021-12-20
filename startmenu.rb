@@ -15,12 +15,14 @@ class StartMenu < BaseMenu
         @maintext = Gosu::Image.from_text("LUNAR GAME",MAINFONTSIZE, {bold: true, font: "impact"})
         @leftArrow = Gosu::Image.from_text("<",LEVELFONTSIZE, {bold: true, font: "impact"})
         @rightArrow = Gosu::Image.from_text(">",LEVELFONTSIZE, {bold: true, font: "impact"})
+        @copyright = Gosu::Image.from_text("© Ronstad, Olle & Söderborg, Viktor",LEVELFONTSIZE, {bold: true, font: "impact"})
         
         @menuid = nil
     end
 
     def draw
         @maintext.draw((@window.width-@maintext.width)*0.5,LEVELFONTSIZE+LEVELFONTTEXTSPACING)
+        @copyright.draw((@window.width-@copyright.width)*0.5, @window.height-50)
         @levels.each_with_index do |level, i|
             level.draw((@window.width-level.width)*0.5,i*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5)
         end
