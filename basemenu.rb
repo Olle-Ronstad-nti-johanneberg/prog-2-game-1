@@ -1,13 +1,14 @@
 class BaseMenu
     def initialize(window)
         @window = window
-        @levelsPath = Dir.children('Level data')
-        @levels = @levelsPath.map do |name|
+        @textItems = Dir.children('Level data')
+        @textItemsImgs = @textItems.map do |name|
             Gosu::Image.from_text(name.gsub(".csv",""),LEVELFONTSIZE, {bold: true, font:"impact"})
         end
         @maintext = Gosu::Image.from_text("LUNAR GAME",MAINFONTSIZE, {bold: true, font: "impact"})
         @leftArrow = Gosu::Image.from_text("<",LEVELFONTSIZE, {bold: true, font: "impact"})
         @rightArrow = Gosu::Image.from_text(">",LEVELFONTSIZE, {bold: true, font: "impact"})
+        @copyright = Gosu::Image.from_text("© Ronstad, Olle & Söderborg, Viktor",LEVELFONTSIZE, {bold: true, font: "impact"})
         
         @menuid = nil
         @last_x = 0
@@ -17,8 +18,8 @@ class BaseMenu
 
     def draw
         @maintext.draw((@window.width-@maintext.width)*0.5,LEVELFONTSIZE+LEVELFONTTEXTSPACING+TOPSPACING)
-        @levels.each_with_index do |level, i|
-            level.draw((@window.width-level.width)*0.5,i*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5+TOPSPACING)
+        @textItemsImgs.each_with_index do |text, i|
+            text.draw((@window.width-text.width)*0.5,i*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*MAINFONTSPACING+TOPSPACING)
         end
         if movedmouse?
             hoveringID = idHoveringOver()
@@ -27,10 +28,10 @@ class BaseMenu
             hoveringID = @menuid
         end
         if !hoveringID.nil?
-            @leftArrow.draw((@window.width+@levels[hoveringID].width)*0.5,hoveringID*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5+TOPSPACING)
-            @rightArrow.draw((@window.width-@levels[hoveringID].width)*0.5-@rightArrow.width,hoveringID*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5+TOPSPACING)
+            @leftArrow.draw((@window.width+@textItemsImgs[hoveringID].width)*0.5,hoveringID*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*MAINFONTSPACING+TOPSPACING)
+            @rightArrow.draw((@window.width-@textItemsImgs[hoveringID].width)*0.5-@rightArrow.width,hoveringID*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*MAINFONTSPACING+TOPSPACING)
         end
-
+        @copyright.draw((@window.width-@copyright.width)*0.5,@window.height-50)
     end
 
     def update
@@ -52,13 +53,6 @@ class BaseMenu
         end
     end
     
-    def path
-        if @menuid.nil?
-            return nil
-        else
-            return @levelsPath[@menuid]
-        end
-    end
 
     private
     
@@ -66,7 +60,7 @@ class BaseMenu
         if @menuid.nil?
             @menuid = 0
         else
-            if @menuid +1 > @levelsPath.length-1
+            if @menuid +1 > @textItems.length-1
                 @menuid = nil
             else
                 @menuid +=1
@@ -76,7 +70,7 @@ class BaseMenu
 
     def menuselectup()
         if @menuid.nil?
-            @menuid = @levelsPath.length-1
+            @menuid = @textItems.length-1
         else
             if @menuid -1 < 0
                 @menuid = nil
@@ -97,8 +91,8 @@ class BaseMenu
 
     def idHoveringOver
         if @window.mouse_x > @window.width/4 && @window.mouse_x < @window.width/4*3
-            tmp = ((@window.mouse_y-MAINFONTSIZE*1.5-TOPSPACING)/(LEVELFONTSIZE+LEVELFONTTEXTSPACING)).floor
-            if tmp < 0 || tmp > @levelsPath.length-1
+            tmp = ((@window.mouse_y-MAINFONTSIZE*MAINFONTSPACING-TOPSPACING)/(LEVELFONTSIZE+LEVELFONTTEXTSPACING)).floor
+            if tmp < 0 || tmp > @textItems.length-1
                 return nil
             else
                 return tmp

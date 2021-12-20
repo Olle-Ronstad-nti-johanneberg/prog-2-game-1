@@ -1,6 +1,7 @@
 require 'gosu'
 
-require_relative 'startmenu'
+require_relative 'levelMenu.rb'
+#require_relative 'startMenu.rb'
 require_relative 'Level.rb'
 require_relative 'player.rb'
 
@@ -9,7 +10,7 @@ class Main < Gosu::Window
         super(1280, 720)
         self.caption = "Lunar Game"
         @level = nil
-        @startmenu = StartMenu.new(self)
+        @levelmenu = LevelMenu.new(self)
         @player = nil
         @state = "startMenu"
         @pressed = false
@@ -20,9 +21,9 @@ class Main < Gosu::Window
     def update
         case @state
         when "startMenu"
-            @startmenu.update
-            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@startmenu.path.nil?
-                @level = Level.new(self,"Level data/#{@startmenu.path}")
+            @levelmenu.update
+            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@levelmenu.path.nil?
+                @level = Level.new(self,"Level data/#{@levelmenu.path}")
                 @player = Player.new(self.height, self.width, @level.ground, @level.data)
                 @state = "level"
             end
@@ -54,11 +55,11 @@ class Main < Gosu::Window
     def draw
         case @state
         when "startMenu"
-            @startmenu.draw
+            @levelmenu.draw
         when "level"
             @level.draw
             @player.draw
-            @font.draw_text(@startmenu.path.gsub(".csv",""), 0, 0, 0)
+            @font.draw_text(@levelmenu.path.gsub(".csv",""), 0, 0, 0)
         when "gameOver"
             @font.draw_text("Congrats, you finished the level!", 0, 0, 0)
             @level.draw
