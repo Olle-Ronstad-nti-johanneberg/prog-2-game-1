@@ -16,7 +16,7 @@ class Main < Gosu::Window
         @state = "startMenu"
         @pressed = false
         @font = Gosu::Font.new(50, name: "Comic Sans MS")
-        @timer = 300
+        @score = nil
     end
 
     def update
@@ -42,21 +42,24 @@ class Main < Gosu::Window
 
         when "level"
             @player.update
-            if (@level.ground.angle(@player.img_x) < @player.angle+10 && @level.ground.angle(@player.img_x) > @player.angle-10) && @player.colliding
+            if (@level.ground.angle(@player.img_x) < @player.angle+25 && @level.ground.angle(@player.img_x) > @player.angle-25) && @player.colliding
                 @state = "gameOver"
-                @timer = 300
+            elsif !((@level.ground.angle(@player.img_x) > @player.angle+25 && @level.ground.angle(@player.img_x) < @player.angle-25)) && @player.colliding
+                @state = "crashed"
             end
 
         when "gameOver"
-            if (button_down?(Gosu::KB_RETURN))
-                @timer = 1
-            end
-            if @timer == 0
+            if (button_down?(Gosu::KB_SPACE))
                 @state = "startMenu"
             end
-            @timer -= 1
+            @score = 10000/(Math.sqrt(@player.vel_x**2 + @player.vel_y**2) + 1)
         when "exit"
             close
+
+        when "crashed"
+            if (button_down?(Gosu::KB_SPACE))
+                @state = "startMenu"
+            end
         end
 
         if !(button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN))
@@ -80,7 +83,13 @@ class Main < Gosu::Window
             @player.draw
             @font.draw_text(@levelmenu.path.gsub(".csv",""), 0, 0, 0)
         when "gameOver"
-            @font.draw_text("Congrats, you finished the level!", 0, 0, 0)
+            @font.draw_text("Congrats, you finished the level! Press SPACE to continue!", 0, 0, 0)
+            @font.draw_text("Score: #{@score.to_i}", 0, 50, 0)
+            @level.draw
+            @player.draw
+        when "crashed"
+            @font.draw_text("You crashed! Press SPACE to continue!", 0, 0, 0)
+            @font.draw_text("Score: 0", 0, 50, 0)
             @level.draw
             @player.draw
         end
