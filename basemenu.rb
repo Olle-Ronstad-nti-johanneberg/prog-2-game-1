@@ -16,9 +16,9 @@ class BaseMenu
     end
 
     def draw
-        @maintext.draw((@window.width-@maintext.width)*0.5,LEVELFONTSIZE+LEVELFONTTEXTSPACING)
+        @maintext.draw((@window.width-@maintext.width)*0.5,LEVELFONTSIZE+LEVELFONTTEXTSPACING+TOPSPACING)
         @levels.each_with_index do |level, i|
-            level.draw((@window.width-level.width)*0.5,i*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5)
+            level.draw((@window.width-level.width)*0.5,i*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5+TOPSPACING)
         end
         if movedmouse?
             hoveringID = idHoveringOver()
@@ -27,8 +27,8 @@ class BaseMenu
             hoveringID = @menuid
         end
         if !hoveringID.nil?
-            @leftArrow.draw((@window.width+@levels[hoveringID].width)*0.5,hoveringID*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5)
-            @rightArrow.draw((@window.width-@levels[hoveringID].width)*0.5-@rightArrow.width,hoveringID*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5)
+            @leftArrow.draw((@window.width+@levels[hoveringID].width)*0.5,hoveringID*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5+TOPSPACING)
+            @rightArrow.draw((@window.width-@levels[hoveringID].width)*0.5-@rightArrow.width,hoveringID*(LEVELFONTSIZE+LEVELFONTTEXTSPACING)+MAINFONTSIZE*1.5+TOPSPACING)
         end
 
     end
@@ -97,7 +97,7 @@ class BaseMenu
 
     def idHoveringOver
         if @window.mouse_x > @window.width/4 && @window.mouse_x < @window.width/4*3
-            tmp = ((@window.mouse_y-MAINFONTSIZE*1.5)/(LEVELFONTSIZE+LEVELFONTTEXTSPACING)).floor
+            tmp = ((@window.mouse_y-MAINFONTSIZE*1.5-TOPSPACING)/(LEVELFONTSIZE+LEVELFONTTEXTSPACING)).floor
             if tmp < 0 || tmp > @levelsPath.length-1
                 return nil
             else
