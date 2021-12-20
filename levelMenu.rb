@@ -1,10 +1,5 @@
 require 'gosu'
 require_relative 'basemenu.rb'
-TOPSPACING = 50
-MAINFONTSIZE = 75
-LEVELFONTSIZE = 20
-LEVELFONTTEXTSPACING = 5
-MAINFONTSPACING = 2
 
 class LevelMenu < BaseMenu
     def initialize(window)

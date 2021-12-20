@@ -1,11 +1,12 @@
+TOPSPACING = 50
+MAINFONTSIZE = 75
+LEVELFONTSIZE = 20
+LEVELFONTTEXTSPACING = 5
+MAINFONTSPACING = 2
+
 class BaseMenu
     def initialize(window)
         @window = window
-        @textItems = Dir.children('Level data')
-        @textItemsImgs = @textItems.map do |name|
-            Gosu::Image.from_text(name.gsub(".csv",""),LEVELFONTSIZE, {bold: true, font:"impact"})
-        end
-        @maintext = Gosu::Image.from_text("LUNAR GAME",MAINFONTSIZE, {bold: true, font: "impact"})
         @leftArrow = Gosu::Image.from_text("<",LEVELFONTSIZE, {bold: true, font: "impact"})
         @rightArrow = Gosu::Image.from_text(">",LEVELFONTSIZE, {bold: true, font: "impact"})
         @copyright = Gosu::Image.from_text("© Ronstad, Olle & Söderborg, Viktor",LEVELFONTSIZE, {bold: true, font: "impact"})
