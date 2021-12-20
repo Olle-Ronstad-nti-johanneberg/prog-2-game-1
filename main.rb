@@ -7,6 +7,7 @@ require_relative 'player.rb'
 class Main < Gosu::Window
     def initialize
         super(1280, 720)
+        self.caption = "Lunar Game"
         @level = nil
         @startmenu = StartMenu.new(self)
         @player = nil
