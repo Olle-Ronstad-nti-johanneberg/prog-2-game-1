@@ -10,7 +10,7 @@ class LevelMenu < BaseMenu
         @textItemsImgs = @levelsPath.map do |name|
             Gosu::Image.from_text(name.gsub(".csv",""),LEVELFONTSIZE, {bold: true, font:"impact"})
         end
-        @maintext = Gosu::Image.from_text("LUNAR GAME",MAINFONTSIZE, {bold: true, font: "impact"})
+        @maintext = Gosu::Image.from_text("level select",MAINFONTSIZE, {bold: true, font: "impact"})
     end
 
     def path
