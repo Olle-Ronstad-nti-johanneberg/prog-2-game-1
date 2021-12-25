@@ -2,6 +2,8 @@ require 'gosu'
 
 # lower numbers gives higer prcision at the cost of preformance
 COLLISION_DETAIL = 0.05
+THRUST = 0.25
+TURNSPEED = 2.5
 
 class Player
 
@@ -10,11 +12,7 @@ class Player
     def initialize(height, width, ground, data)
         @player_active = Gosu::Image.load_tiles('assets/Vrocket_thrust.png', 64, 64, options = {retro: true})
         @player_idle = Gosu::Image.load_tiles('assets/Vrocket_idle.png', 64, 64, options = {retro: true})
-        @img_x = 0
-        @img_y = 0
-        @angle = 0
-        @vel_x = 0
-        @vel_y = 0
+        @img_x =@img_y = @angle = @vel_x = @vel_y = 0
         @gravity = data[:grav]
         @scale_x = 2
         @scale_y = 2
@@ -53,19 +51,19 @@ class Player
         end
     
         if Gosu.button_down? Gosu::KB_W or Gosu.button_down? Gosu::KB_UP
-            @vel_x += Math::sin(@angle*Math::PI/180)*0.25
-            @vel_y += Math::cos(@angle*Math::PI/180)*-0.25
+            @vel_x += Math::sin(@angle*Math::PI/180)*THRUST
+            @vel_y += Math::cos(@angle*Math::PI/180)*-THRUST
             @moving = true
         else
             @moving = false
         end
             
         if Gosu.button_down? Gosu::KB_A or Gosu.button_down? Gosu::KB_LEFT
-            @angle -= 2.5
+            @angle -= TURNSPEED
         end
-            
+        
         if Gosu.button_down? Gosu::KB_D or Gosu.button_down? Gosu::KB_RIGHT
-            @angle += 2.5
+            @angle += TURNSPEED
         end
     
         @img_y += @vel_y
@@ -73,7 +71,7 @@ class Player
     end
     
     def draw
-        if @moving == true
+        if @moving
             @player_active[@animation_state/10].draw_rot(@img_x, @img_y, 0, @angle, center_x = 0.5, center_y = 0.5, scale_x = @scale_x, scale_y = @scale_y)
             @animation_state = (@animation_state + 1) % 30
         else
