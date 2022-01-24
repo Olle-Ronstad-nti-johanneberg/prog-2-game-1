@@ -1,5 +1,6 @@
 require 'gosu'
 
+require_relative 'legalMenu.rb'
 require_relative 'levelMenu.rb'
 require_relative 'startmenu.rb'
 require_relative 'Level.rb'
@@ -12,6 +13,7 @@ class Main < Gosu::Window
         @level = nil
         @levelmenu = LevelMenu.new(self)
         @startmenu = StartMenu.new(self)
+        @legalmenu = LegalMenu.new(self)
         @player = nil
         @state = "startMenu"
         @pressed = false
@@ -27,6 +29,7 @@ class Main < Gosu::Window
                 @state = @startmenu.newState
                 @pressed = true
             end
+
         when "levelMenu"
             @levelmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@levelmenu.path.nil? && @pressed == false
@@ -37,6 +40,13 @@ class Main < Gosu::Window
                     @player = Player.new(self.height, self.width, @level.ground, @level.data)
                     @state = "level"
                 end
+                @pressed = true
+            end
+
+        when "legal"
+            @legalmenu.update
+            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
+                @state = @legalmenu.newState
                 @pressed = true
             end
 
@@ -78,6 +88,8 @@ class Main < Gosu::Window
            @startmenu.draw 
         when "levelMenu"
             @levelmenu.draw
+        when "legal"
+            @legalmenu.draw
         when "level"
             @level.draw
             @player.draw
