@@ -5,6 +5,7 @@ require_relative 'levelMenu.rb'
 require_relative 'startmenu.rb'
 require_relative 'Level.rb'
 require_relative 'player.rb'
+require_relative 'settingsmenu.rb'
 
 class Main < Gosu::Window
     def initialize
@@ -14,6 +15,7 @@ class Main < Gosu::Window
         @levelmenu = LevelMenu.new(self)
         @startmenu = StartMenu.new(self)
         @legalmenu = LegalMenu.new(self)
+        @settingsmenu = SettingsMenu.new(self)
         @player = nil
         @state = "startMenu"
         @pressed = false
@@ -29,7 +31,11 @@ class Main < Gosu::Window
                 @state = @startmenu.newState
                 @pressed = true
             end
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> 79e9fc529e02d21bc74dcf8a2c09c18e5af5adc4
         when "levelMenu"
             @levelmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@levelmenu.path.nil? && @pressed == false
@@ -43,10 +49,17 @@ class Main < Gosu::Window
                 @pressed = true
             end
 
+<<<<<<< HEAD
         when "legal"
             @legalmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
                 @state = @legalmenu.newState
+=======
+        when "settingsMenu"
+            @settingsmenu.update
+            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
+                @state = @settingsmenu.newState
+>>>>>>> 79e9fc529e02d21bc74dcf8a2c09c18e5af5adc4
                 @pressed = true
             end
 
@@ -88,8 +101,13 @@ class Main < Gosu::Window
            @startmenu.draw 
         when "levelMenu"
             @levelmenu.draw
+<<<<<<< HEAD
         when "legal"
             @legalmenu.draw
+=======
+        when "settingsMenu"
+            @settingsmenu.draw
+>>>>>>> 79e9fc529e02d21bc74dcf8a2c09c18e5af5adc4
         when "level"
             @level.draw
             @player.draw
