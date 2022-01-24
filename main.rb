@@ -4,6 +4,7 @@ require_relative 'levelMenu.rb'
 require_relative 'startmenu.rb'
 require_relative 'Level.rb'
 require_relative 'player.rb'
+require_relative 'settingsmenu.rb'
 
 class Main < Gosu::Window
     def initialize
@@ -12,6 +13,7 @@ class Main < Gosu::Window
         @level = nil
         @levelmenu = LevelMenu.new(self)
         @startmenu = StartMenu.new(self)
+        @settingsmenu = SettingsMenu.new(self)
         @player = nil
         @state = "startMenu"
         @pressed = false
@@ -27,6 +29,7 @@ class Main < Gosu::Window
                 @state = @startmenu.newState
                 @pressed = true
             end
+            
         when "levelMenu"
             @levelmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@levelmenu.path.nil? && @pressed == false
@@ -37,6 +40,13 @@ class Main < Gosu::Window
                     @player = Player.new(self.height, self.width, @level.ground, @level.data)
                     @state = "level"
                 end
+                @pressed = true
+            end
+
+        when "settingsMenu"
+            @settingsmenu.update
+            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
+                @state = @settingsmenu.newState
                 @pressed = true
             end
 
@@ -78,6 +88,8 @@ class Main < Gosu::Window
            @startmenu.draw 
         when "levelMenu"
             @levelmenu.draw
+        when "settingsMenu"
+            @settingsmenu.draw
         when "level"
             @level.draw
             @player.draw
