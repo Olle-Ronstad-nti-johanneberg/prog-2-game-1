@@ -43,12 +43,12 @@ class Main < Gosu::Window
         when "level"
             @player.update
             if (@level.ground.angle(@player.img_x) < @player.angle+25 && @level.ground.angle(@player.img_x) > @player.angle-25) && @player.colliding
-                @state = "gameOver"
+                @state = "landed"
             elsif !((@level.ground.angle(@player.img_x) > @player.angle+25 && @level.ground.angle(@player.img_x) < @player.angle-25)) && @player.colliding
                 @state = "crashed"
             end
 
-        when "gameOver"
+        when "landed"
             if (button_down?(Gosu::KB_SPACE))
                 @state = "startMenu"
             end
@@ -82,7 +82,7 @@ class Main < Gosu::Window
             @level.draw
             @player.draw
             @font.draw_text(@levelmenu.path.gsub(".csv",""), 0, 0, 0)
-        when "gameOver"
+        when "landed"
             @font.draw_text("Congrats, you finished the level! Press SPACE to continue!", 0, 0, 0)
             @font.draw_text("Score: #{@score.to_i}", 0, 50, 0)
             @level.draw
