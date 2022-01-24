@@ -4,6 +4,7 @@ require_relative 'basemenu.rb'
 class SettingsMenu < BaseMenu
     def initialize(window)
         super(window)
+        @extratextImg =  Gosu::Image.from_text("SIKE! We don't have energy to create this",LEVELFONTSIZE, {bold: true, font: "impact"})
         @states = ["startMenu"]
         @textItems = ["Back"]
         @textItemsImgs = @textItems.map do |name|
