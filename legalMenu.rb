@@ -5,7 +5,7 @@ class LegalMenu < BaseMenu
     def initialize(window)
         super(window)
         @states = ["legal","startMenu"]
-        @textItems = [Gosu::LICENSES,"back"]
+        @textItems = [Gosu::LICENSES,"Back"]
         @textItemsImgs = @textItems.map do |name|
             Gosu::Image.from_text(name,LEVELFONTSIZE, {bold: true, font:"impact"})
         end
