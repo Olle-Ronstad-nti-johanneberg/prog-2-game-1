@@ -1,5 +1,5 @@
 ground,Ground data/level1.csv
-topColor,#ffffffff
-botomColor,#00000000
+topColor,#ff26ced4
+botomColor,#ff09356b
 rockIMG,nedladdning.jpg
-grav,0.1
+grav,0.17
