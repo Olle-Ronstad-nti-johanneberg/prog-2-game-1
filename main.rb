@@ -45,13 +45,14 @@ class Main < Gosu::Window
                 end
                 @pressed = true
             end
-
+            
         when "legal"
             @legalmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
                 @state = @legalmenu.newState
+                @pressed = true
             end
-            
+
         when "settingsMenu"
             @settingsmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
