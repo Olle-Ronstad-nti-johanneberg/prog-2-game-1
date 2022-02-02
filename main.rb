@@ -32,14 +32,13 @@ class Main < Gosu::Window
                 @pressed = true
             end
 
-            
         when "levelMenu"
             @levelmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@levelmenu.path.nil? && @pressed == false
                 if @levelmenu.path == "Back"
                     @state = "startMenu"
                 else
-                    @level = Level.new(self,"Level data/#{@levelmenu.path}")
+                    @level = Level.new(self, @levelmenu.path)
                     @player = Player.new(self.height, self.width, @level.ground, @level.data)
                     @state = "level"
                 end
@@ -105,7 +104,7 @@ class Main < Gosu::Window
         when "level"
             @level.draw
             @player.draw
-            @font.draw_text(@levelmenu.path.gsub(".csv",""), 0, 0, 0)
+            @font.draw_text(@levelmenu.path["name"], 0, 0, 0)
         when "landed"
             @font.draw_text("Congrats, you finished the level! Press SPACE to continue!", 0, 0, 0)
             @font.draw_text("Score: #{@score.to_i}", 0, 50, 0)

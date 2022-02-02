@@ -89,8 +89,6 @@ class BaseMenu
         return moved
     end
 
-
-
     def idHoveringOver
         if @window.mouse_x > @window.width/4 && @window.mouse_x < @window.width/4*3
             tmp = ((@window.mouse_y-MAINFONTSIZE*MAINFONTSPACING-TOPSPACING-@extratextImg.height)/(LEVELFONTSIZE+LEVELFONTTEXTSPACING)).floor
@@ -101,5 +99,4 @@ class BaseMenu
             end
         end
     end
-
 end

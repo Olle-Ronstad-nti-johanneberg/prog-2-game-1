@@ -13,7 +13,7 @@ class Player
         @player_active = Gosu::Image.load_tiles('assets/Vrocket_thrust.png', 64, 64, options = {retro: true})
         @player_idle = Gosu::Image.load_tiles('assets/Vrocket_idle.png', 64, 64, options = {retro: true})
         @img_x =@img_y = @angle = @vel_x = @vel_y = 0
-        @gravity = data[:grav]
+        @gravity = data["grav"]
         @scale_x = 2
         @scale_y = 2
         @height = height

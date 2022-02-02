@@ -1,3 +1,4 @@
+require 'byebug'
 require 'gosu'
 require_relative 'basemenu.rb'
 
@@ -5,11 +6,13 @@ class LevelMenu < BaseMenu
     def initialize(window)
         super(window)
 
-        @levelsPath = Dir.children('Level data').append("Back")
-        @textItems = @levelsPath
-        @textItemsImgs = @levelsPath.map do |name|
-            Gosu::Image.from_text(name.gsub(".csv",""),LEVELFONTSIZE, {bold: true, font:"impact"})
+        @levels = YAML.load_file("Level data/levels.yaml")
+        @textItems = []
+        @textItemsImgs = @levels.map do |level|
+            @textItems.push(level["name"])        
+            Gosu::Image.from_text(level["name"],LEVELFONTSIZE, {bold: true, font:"impact"})
         end
+        @textItemsImgs.append(Gosu::Image.from_text("Back",LEVELFONTSIZE, {bold: true, font:"impact"}))
         @maintext = Gosu::Image.from_text("Level Select",MAINFONTSIZE, {bold: true, font: "impact"})
     end
 
@@ -17,7 +20,7 @@ class LevelMenu < BaseMenu
         if @menuid.nil?
             return nil
         else
-            return @levelsPath[@menuid]
+            return @levels[@menuid]
         end
     end
 end
