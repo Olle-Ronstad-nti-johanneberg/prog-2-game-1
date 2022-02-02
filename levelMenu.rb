@@ -12,6 +12,8 @@ class LevelMenu < BaseMenu
             @textItems.push(level["name"])        
             Gosu::Image.from_text(level["name"],LEVELFONTSIZE, {bold: true, font:"impact"})
         end
+        @levels.append("Back")
+        @textItems.append("Back")
         @textItemsImgs.append(Gosu::Image.from_text("Back",LEVELFONTSIZE, {bold: true, font:"impact"}))
         @maintext = Gosu::Image.from_text("Level Select",MAINFONTSIZE, {bold: true, font: "impact"})
     end
