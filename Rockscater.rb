@@ -6,7 +6,7 @@ class Rock
     def initialize(window,x,y,z,size,img)
         @window = window
         @size = (rand()+0.5)*size
-        @img = Gosu::Image.new(img)
+        @img = Gosu::Image.new(img,options = {retro: true})
         @x = x-(@img.width*@size)*0.5
         @y = y-(@img.height*@size)*0.5
         @z = z
