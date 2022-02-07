@@ -2,33 +2,33 @@
   ground: Ground data/level1.csv
   topColor: "#ffffffff"
   botomColor: "#00000000"
-  rockIMG: nedladdning.jpg
+  rockIMG: assets/moon-rock-blur.png
   grav: 0.1
 
 - name: Level 2
   ground: Ground data/level2.csv
   topColor: "#ffe0af26"
   botomColor: "#ff856905"
-  rockIMG: nedladdning.jpg
+  rockIMG: assets/moon-rock-blur.png
   grav: 0.2
 
 - name: Level 3
   ground: Ground data/level1.csv
   topColor: "#ffd13f13"
   botomColor: "#ffd16513"
-  rockIMG: nedladdning.jpg
+  rockIMG: assets/moon-rock-blur.png
   grav: 0.1
 
 - name: Level 4
   ground: Ground data/level1.csv
   topColor: "#ffffffff"
   botomColor: "#00000000"
-  rockIMG: nedladdning.jpg
+  rockIMG: assets/moon-rock-blur.png
   grav: 0.1
 
 - name: Level 5
   ground: Ground data/level1.csv
   topColor: "#ff26ced4"
   botomColor: "#ff09356b"
-  rockIMG: nedladdning.jpg
+  rockIMG: assets/moon-rock-blur.png
   grav: 0.1
