@@ -12,7 +12,10 @@ class Player
     def initialize(height, width, ground, data)
         @player_active = Gosu::Image.load_tiles('assets/Vrocket_thrust.png', 64, 64, options = {retro: true})
         @player_idle = Gosu::Image.load_tiles('assets/Vrocket_idle.png', 64, 64, options = {retro: true})
-        @img_x =@img_y = @angle = @vel_x = @vel_y = 0
+        # @img_x = 
+        @img_y = @vel_x = @vel_y = 0
+        @angle = rand(0..90)
+        @img_x = rand(0..width)
         @gravity = data["grav"]
         @scale_x = 2
         @scale_y = 2

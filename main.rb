@@ -6,6 +6,7 @@ require_relative 'startmenu.rb'
 require_relative 'Level.rb'
 require_relative 'player.rb'
 require_relative 'settingsmenu.rb'
+require_relative 'highscore.rb'
 
 class Main < Gosu::Window
     def initialize
@@ -16,11 +17,13 @@ class Main < Gosu::Window
         @startmenu = StartMenu.new(self)
         @legalmenu = LegalMenu.new(self)
         @settingsmenu = SettingsMenu.new(self)
+        @highscoremenu = Highscore.new(self)
         @player = nil
         @state = "startMenu"
         @pressed = false
         @font = Gosu::Font.new(50, name: "Comic Sans MS")
         @score = nil
+        @highscore = YAML.load_file("highscore.yaml")
     end
 
     def update
@@ -44,6 +47,14 @@ class Main < Gosu::Window
                 end
                 @pressed = true
             end
+        
+        when "highscore"
+            @highscoremenu.update
+            if (button_down?(Gosu::MS_LEFT))||button_down?(Gosu::KB_RETURN) && @pressed == false
+                @state = @highscoremenu.newState
+                @pressed = true
+            end
+
             
         when "legal"
             @legalmenu.update
@@ -66,27 +77,28 @@ class Main < Gosu::Window
             elsif !((@level.ground.angle(@player.img_x) > @player.angle+25 && @level.ground.angle(@player.img_x) < @player.angle-25)) && @player.colliding
                 @state = "crashed"
             end
+            if Gosu.button_down?(Gosu::KbEscape)
+                @state ="levelMenu"
+            end
 
         when "landed"
             if (button_down?(Gosu::KB_SPACE))
                 @state = "startMenu"
             end
             @score = 10000/(Math.sqrt(@player.vel_x**2 + @player.vel_y**2) + 1)
+            @highscore[0]["#{@levelmenu.path["name"]}"] = @score
         when "exit"
             close
 
         when "crashed"
             if (button_down?(Gosu::KB_SPACE))
                 @state = "startMenu"
+                @highscore[0]["#{@levelmenu.path["name"]}"] = 0
             end
         end
 
         if !(button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN))
             @pressed = false
-        end
-        if Gosu.button_down?(Gosu::KbEscape)
-            close
-            puts "Game closed!"
         end
     end
 
@@ -94,9 +106,11 @@ class Main < Gosu::Window
     def draw
         case @state
         when "startMenu"
-           @startmenu.draw 
+           @startmenu.draw
         when "levelMenu"
             @levelmenu.draw
+        when "highscore"
+            @highscoremenu.draw
         when "legal"
             @legalmenu.draw
         when "settingsMenu"

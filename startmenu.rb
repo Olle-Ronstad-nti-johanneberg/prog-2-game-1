@@ -4,8 +4,8 @@ require_relative 'basemenu.rb'
 class StartMenu < BaseMenu
     def initialize(window)
         super(window)
-        @states = ["levelMenu","settingsMenu","legal","exit"]
-        @textItems = ["Level Select","Settings","Legal","Exit"]
+        @states = ["levelMenu", "highscore", "settingsMenu", "legal", "exit"]
+        @textItems = ["Level Select", "Highscore", "Settings", "Legal", "Exit"]
         @textItemsImgs = @textItems.map do |name|
             Gosu::Image.from_text(name,LEVELFONTSIZE, {bold: true, font:"impact"})
         end
