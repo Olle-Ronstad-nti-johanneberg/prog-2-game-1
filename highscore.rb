@@ -3,7 +3,8 @@ require_relative 'basemenu.rb'
 
 class Highscore < BaseMenu
     def initialize(window)
-        super(window)
+        super(window,"","",{},"highscore")
+
         @data = YAML.load_file('highscore.yaml')
         @extratextImg = @data.each.map do |key|
             (key["name"] + " : " + key["score"].to_s)

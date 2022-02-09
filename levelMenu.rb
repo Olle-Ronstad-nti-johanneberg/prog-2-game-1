@@ -4,7 +4,7 @@ require_relative 'basemenu.rb'
 
 class LevelMenu < BaseMenu
     def initialize(window)
-        super(window)
+        super(window,"","",{},"highscore")
 
         @levels = YAML.load_file("Level data/levels.yaml")
         @textItems = []
