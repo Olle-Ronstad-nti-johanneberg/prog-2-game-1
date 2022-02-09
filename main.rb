@@ -83,7 +83,7 @@ class Main < Gosu::Window
 
         when "landed"
             if (button_down?(Gosu::KB_SPACE))
-                @state = "startMenu"
+                @state = "levelMenu"
             end
             @score = 10000/(Math.sqrt(@player.vel_x**2 + @player.vel_y**2) + 1)
             @highscore[0]["#{@levelmenu.path["name"]}"] = @score
