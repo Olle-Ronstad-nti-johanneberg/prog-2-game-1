@@ -1,11 +1,9 @@
 require 'gosu'
 
-require_relative 'legalMenu.rb'
+require_relative 'basemenu.rb'
 require_relative 'levelMenu.rb'
-require_relative 'startmenu.rb'
 require_relative 'Level.rb'
 require_relative 'player.rb'
-require_relative 'settingsmenu.rb'
 require_relative 'highscore.rb'
 
 class Main < Gosu::Window
@@ -14,9 +12,11 @@ class Main < Gosu::Window
         self.caption = "Lunar Game"
         @level = nil
         @levelmenu = LevelMenu.new(self)
-        @startmenu = StartMenu.new(self)
-        @legalmenu = LegalMenu.new(self)
-        @settingsmenu = SettingsMenu.new(self)
+        @startmenu = BaseMenu.new(self,"LUNAR GAME", "",
+            {"Level Select"=>"levelMenu","Highscore"=>"Highscore","Settings"=>"settingsMenu","Legal"=>"legal","Exit"=>"exit"},
+            "startMenu")
+        @legalmenu = BaseMenu.new(self,"Leagal",Gosu::LICENSES,{back:"startMenu"},"Leagal")
+        @settingsmenu = BaseMenu.new(self,"Settings","SIKE! Here is current Gosu version: #{Gosu::VERSION}\n\n If you want settings, fight me! ( •_•)>⌐■-■",{back:"startMenu"},"settingsMenu")
         @highscoremenu = Highscore.new(self)
         @player = nil
         @state = "startMenu"
@@ -31,6 +31,7 @@ class Main < Gosu::Window
         when "startMenu"
             @startmenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
+                p @startmenu.newState
                 @state = @startmenu.newState
                 @pressed = true
             end
