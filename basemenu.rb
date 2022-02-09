@@ -5,12 +5,24 @@ LEVELFONTTEXTSPACING = 5
 MAINFONTSPACING = 2
 
 class BaseMenu
-    def initialize(window)
+    def initialize(window,maintext,extraText,textStateHash,selfstate)
         @window = window
+        @selfstate = selfstate
+
+        @states = []
+        @textItemsImgs = []
+
+        textStateHash.each do |key, value|
+            @textItemsImgs.append(Gosu::Image.from_text(key.to_s,LEVELFONTSIZE, {bold: true, font:"impact"}))
+            @states = [value]
+        end
+
+        @maintext = Gosu::Image.from_text("Settings",MAINFONTSIZE, {bold: true, font: "impact"})
+        @extratextImg = Gosu::Image.from_text(extraText,LEVELFONTSIZE, {bold: true, font: "impact"})
         @leftArrow = Gosu::Image.from_text("<",LEVELFONTSIZE, {bold: true, font: "impact"})
         @rightArrow = Gosu::Image.from_text(">",LEVELFONTSIZE, {bold: true, font: "impact"})
         @copyright = Gosu::Image.from_text("© Ronstad, Olle & Söderborg, Viktor",LEVELFONTSIZE, {bold: true, font: "impact"})
-        @extratextImg =  Gosu::Image.from_text("",LEVELFONTSIZE, {bold: true, font: "impact"})
+
         @menuid = nil
         @last_x = 0
         @last_y = 0
@@ -54,6 +66,14 @@ class BaseMenu
             @pressed = false
         end
     end
+
+    def newState
+        if @menuid.nil?
+            return @selfstate
+        else
+            return @states[@menuid]
+        end
+    end
     
 
     private
@@ -92,7 +112,7 @@ class BaseMenu
     def idHoveringOver
         if @window.mouse_x > @window.width/4 && @window.mouse_x < @window.width/4*3
             tmp = ((@window.mouse_y-MAINFONTSIZE*MAINFONTSPACING-TOPSPACING-@extratextImg.height)/(LEVELFONTSIZE+LEVELFONTTEXTSPACING)).floor
-            if tmp < 0 || tmp > @textItems.length-1
+            if tmp < 0 || tmp > @textItemsImgs.length-1
                 return nil
             else
                 return tmp
