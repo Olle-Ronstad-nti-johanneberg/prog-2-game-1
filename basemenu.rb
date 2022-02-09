@@ -14,7 +14,7 @@ class BaseMenu
 
         textStateHash.each do |key, value|
             @textItemsImgs.append(Gosu::Image.from_text(key.to_s,LEVELFONTSIZE, {bold: true, font:"impact"}))
-            @states = [value]
+            @states.append(value)
         end
 
         @maintext = Gosu::Image.from_text("Settings",MAINFONTSIZE, {bold: true, font: "impact"})
@@ -82,7 +82,7 @@ class BaseMenu
         if @menuid.nil?
             @menuid = 0
         else
-            if @menuid +1 > @textItems.length-1
+            if @menuid +1 > @textItemsImgs.length-1
                 @menuid = nil
             else
                 @menuid +=1
@@ -92,7 +92,7 @@ class BaseMenu
 
     def menuselectup()
         if @menuid.nil?
-            @menuid = @textItems.length-1
+            @menuid = @textItemsImgs.length-1
         else
             if @menuid -1 < 0
                 @menuid = nil
