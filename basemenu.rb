@@ -17,7 +17,7 @@ class BaseMenu
             @states.append(value)
         end
 
-        @maintext = Gosu::Image.from_text("Settings",MAINFONTSIZE, {bold: true, font: "impact"})
+        @maintext = Gosu::Image.from_text(maintext,MAINFONTSIZE, {bold: true, font: "impact"})
         @extratextImg = Gosu::Image.from_text(extraText,LEVELFONTSIZE, {bold: true, font: "impact"})
         @leftArrow = Gosu::Image.from_text("<",LEVELFONTSIZE, {bold: true, font: "impact"})
         @rightArrow = Gosu::Image.from_text(">",LEVELFONTSIZE, {bold: true, font: "impact"})
