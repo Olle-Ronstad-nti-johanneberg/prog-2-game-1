@@ -13,7 +13,7 @@ class Main < Gosu::Window
         @level = nil
         @levelmenu = LevelMenu.new(self)
         @startmenu = BaseMenu.new(self,"LUNAR GAME", "",
-            {"Level Select"=>"levelMenu","Highscore"=>"Highscore","Settings"=>"settingsMenu","Legal"=>"legal","Exit"=>"exit"},
+            {"Level Select"=>"levelMenu","Highscore"=>"highscore","Settings"=>"settingsMenu","Legal"=>"legal","Exit"=>"exit"},
             "startMenu")
         @legalmenu = BaseMenu.new(self,"Leagal",Gosu::LICENSES,{back:"startMenu"},"Leagal")
         @settingsmenu = BaseMenu.new(self,"Settings","SIKE! Here is current Gosu version: #{Gosu::VERSION}\n\n If you want settings, fight me! ( •_•)>⌐■-■",{back:"startMenu"},"settingsMenu")
