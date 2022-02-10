@@ -96,6 +96,9 @@ class Main < Gosu::Window
                 @state = "startMenu"
                 @highscore[0]["#{@levelmenu.path["name"]}"] = 0
             end
+        
+        else
+            raise "state #{@state} is unknown"
         end
 
         if !(button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN))
