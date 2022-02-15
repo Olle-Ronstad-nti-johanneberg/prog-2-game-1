@@ -97,6 +97,7 @@ class Main < Gosu::Window
             @pauseMenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
                 if @pauseMenu.newState == "restart"
+                    @pauseMenu = PauseMenu.new(self,"game paused","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{"nil"}",{"restart"=>"restart","return"=>"level","exit"=>"levelMenu"},"paused")
                     @level = Level.new(self, @levelmenu.path)
                     @player = Player.new(self.height, self.width, @level.ground, @level.data)
                     @state = "level"
