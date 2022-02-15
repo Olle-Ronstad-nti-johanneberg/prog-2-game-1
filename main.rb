@@ -93,7 +93,7 @@ class Main < Gosu::Window
 
         when "crashed"
             if (button_down?(Gosu::KB_SPACE))
-                @state = "startMenu"
+                @state = "levelMenu"
                 @highscore[0]["#{@levelmenu.path["name"]}"] = 0
             end
         
