@@ -77,29 +77,22 @@ class Main < Gosu::Window
         when "level"
             @player.update
             if (@level.ground.angle(@player.img_x) < @player.angle+25 && @level.ground.angle(@player.img_x) > @player.angle-25) && @player.colliding
-                @state = "landed"
+                @score = 10000/(Math.sqrt(@player.vel_x**2 + @player.vel_y**2) + 1)
+                @pauseMenu = PauseMenu.new(self,"Landed","Curent level:\n#{@levelmenu.path["name"]}\nScore:\n#{@score.round()}\nHighscore:\n#{"nil"}",{"restart"=>"restart","exit"=>"levelMenu"},"paused")
+                @state = "paused"
+
             elsif !((@level.ground.angle(@player.img_x) > @player.angle+25 && @level.ground.angle(@player.img_x) < @player.angle-25)) && @player.colliding
-                @state = "crashed"
+                @pauseMenu = PauseMenu.new(self,"game over","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{"nil"}",{"restart"=>"restart","exit"=>"levelMenu"},"paused")
+                @state = "paused"
+
             end
             if Gosu.button_down?(Gosu::KbEscape)
                 @state ="paused"
             end
 
-        when "landed"
-            if (button_down?(Gosu::KB_SPACE))
-                @state = "levelMenu"
-            end
-            @score = 10000/(Math.sqrt(@player.vel_x**2 + @player.vel_y**2) + 1)
-            @highscore[0]["#{@levelmenu.path["name"]}"] = @score
         when "exit"
             close
 
-        when "crashed"
-            if (button_down?(Gosu::KB_SPACE))
-                @state = "levelMenu"
-                @highscore[0]["#{@levelmenu.path["name"]}"] = 0
-            end
-        
         when "paused"
             @pauseMenu.update
             if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
@@ -138,16 +131,6 @@ class Main < Gosu::Window
             @level.draw
             @player.draw
             @font.draw_text(@levelmenu.path["name"], 0, 0, 0)
-        when "landed"
-            @font.draw_text("Congrats, you finished the level! Press SPACE to continue!", 0, 0, 0)
-            @font.draw_text("Score: #{@score.to_i}", 0, 50, 0)
-            @level.draw
-            @player.draw
-        when "crashed"
-            @font.draw_text("You crashed! Press SPACE to continue!", 0, 0, 0)
-            @font.draw_text("Score: 0", 0, 50, 0)
-            @level.draw
-            @player.draw
         when "paused"
             @level.draw
             @player.draw
