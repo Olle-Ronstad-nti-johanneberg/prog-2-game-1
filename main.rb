@@ -5,6 +5,7 @@ require_relative 'levelMenu.rb'
 require_relative 'Level.rb'
 require_relative 'player.rb'
 require_relative 'highscore.rb'
+require_relative 'pauseMenu.rb'
 
 class Main < Gosu::Window
     def initialize
@@ -24,6 +25,7 @@ class Main < Gosu::Window
         @font = Gosu::Font.new(50, name: "Comic Sans MS")
         @score = nil
         @highscore = YAML.load_file("highscore.yaml")
+        @pauseMenu = nil
     end
 
     def update
@@ -42,6 +44,7 @@ class Main < Gosu::Window
                 if @levelmenu.path == "Back"
                     @state = "startMenu"
                 else
+                    @pauseMenu = PauseMenu.new(self,"game paused","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{"nil"}",{"restart"=>"restart","return"=>"level","exit"=>"levelMenu"},"paused")
                     @level = Level.new(self, @levelmenu.path)
                     @player = Player.new(self.height, self.width, @level.ground, @level.data)
                     @state = "level"
@@ -79,7 +82,7 @@ class Main < Gosu::Window
                 @state = "crashed"
             end
             if Gosu.button_down?(Gosu::KbEscape)
-                @state ="levelMenu"
+                @state ="paused"
             end
 
         when "landed"
@@ -97,6 +100,18 @@ class Main < Gosu::Window
                 @highscore[0]["#{@levelmenu.path["name"]}"] = 0
             end
         
+        when "paused"
+            @pauseMenu.update
+            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
+                if @pauseMenu.newState == "restart"
+                    @level = Level.new(self, @levelmenu.path)
+                    @player = Player.new(self.height, self.width, @level.ground, @level.data)
+                    @state = "level"
+                else
+                    @state = @pauseMenu.newState
+                end
+                @pressed = true
+            end
         else
             raise "state #{@state} is unknown"
         end
@@ -133,7 +148,12 @@ class Main < Gosu::Window
             @font.draw_text("Score: 0", 0, 50, 0)
             @level.draw
             @player.draw
+        when "paused"
+            @level.draw
+            @player.draw
+            @pauseMenu.draw
         end
+
     end
 end
 
