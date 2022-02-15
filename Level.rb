@@ -12,7 +12,7 @@ class Level
         @window = window
         @data = data
         @ground = Ground.new(@window,@data["ground"],Hex(@data["topColor"]),Hex(@data["botomColor"]))
-        @rockscater = Rockscater.new(@window,@ground,20,1,1,@data["rockIMG"])
+        @rockscater = Rockscater.new(@window,@ground,20,0,1,@data["rockIMG"])
     end
 
     def draw()
