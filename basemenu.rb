@@ -18,7 +18,7 @@ class BaseMenu
         end
 
         @maintext = Gosu::Image.from_text(maintext,MAINFONTSIZE, {bold: true, font: "impact"})
-        @extratextImg = Gosu::Image.from_text(extraText,LEVELFONTSIZE, {bold: true, font: "impact"})
+        @extratextImg = Gosu::Image.from_text(extraText,LEVELFONTSIZE, {bold: true, font: "impact", align: :center})
         @leftArrow = Gosu::Image.from_text("<",LEVELFONTSIZE, {bold: true, font: "impact"})
         @rightArrow = Gosu::Image.from_text(">",LEVELFONTSIZE, {bold: true, font: "impact"})
         @copyright = Gosu::Image.from_text("© Ronstad, Olle & Söderborg, Viktor",LEVELFONTSIZE, {bold: true, font: "impact"})
