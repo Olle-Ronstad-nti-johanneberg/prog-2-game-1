@@ -6,6 +6,7 @@ require_relative 'Level.rb'
 require_relative 'player.rb'
 require_relative 'highscore.rb'
 require_relative 'pauseMenu.rb'
+require_relative 'custominput.rb'
 
 class Main < Gosu::Window
     def initialize
@@ -32,7 +33,7 @@ class Main < Gosu::Window
         case @state
         when "startMenu"
             @startmenu.update
-            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
+            if enter? && @pressed == false
                 p @startmenu.newState
                 @state = @startmenu.newState
                 @pressed = true
@@ -40,7 +41,7 @@ class Main < Gosu::Window
 
         when "levelMenu"
             @levelmenu.update
-            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && !@levelmenu.path.nil? && @pressed == false
+            if enter? && !@levelmenu.path.nil? && @pressed == false
                 if @levelmenu.path == "Back"
                     @state = "startMenu"
                 else
@@ -54,7 +55,7 @@ class Main < Gosu::Window
         
         when "highscore"
             @highscoremenu.update
-            if (button_down?(Gosu::MS_LEFT))||button_down?(Gosu::KB_RETURN) && @pressed == false
+            if enter? && @pressed == false
                 @state = @highscoremenu.newState
                 @pressed = true
             end
@@ -62,14 +63,14 @@ class Main < Gosu::Window
             
         when "legal"
             @legalmenu.update
-            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
+            if enter? && @pressed == false
                 @state = @legalmenu.newState
                 @pressed = true
             end
 
         when "settingsMenu"
             @settingsmenu.update
-            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
+            if enter? && @pressed == false
                 @state = @settingsmenu.newState
                 @pressed = true
             end
@@ -95,7 +96,7 @@ class Main < Gosu::Window
 
         when "paused"
             @pauseMenu.update
-            if (button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN)) && @pressed == false
+            if enter? && @pressed == false
                 if @pauseMenu.newState == "restart"
                     @pauseMenu = PauseMenu.new(self,"game paused","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{"nil"}",{"restart"=>"restart","return"=>"level","exit"=>"levelMenu"},"paused")
                     @level = Level.new(self, @levelmenu.path)
@@ -110,7 +111,7 @@ class Main < Gosu::Window
             raise "state #{@state} is unknown"
         end
 
-        if !(button_down?(Gosu::MS_LEFT)||button_down?(Gosu::KB_RETURN))
+        if !enter?
             @pressed = false
         end
     end
