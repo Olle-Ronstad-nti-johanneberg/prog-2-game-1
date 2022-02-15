@@ -1,3 +1,5 @@
+require_relative 'custominput.rb'
+
 TOPSPACING = 50
 MAINFONTSIZE = 75
 LEVELFONTSIZE = 20
@@ -49,20 +51,20 @@ class BaseMenu
     end
 
     def update
-        if Gosu.button_down?(Gosu::KB_DOWN)||Gosu.button_down?(Gosu::KB_S)
+        if down?
             if !@pressed
                 menuselectdown()
                 @pressed = true
             end
         end 
-        if Gosu.button_down?(Gosu::KB_UP)||Gosu.button_down?(Gosu::KB_W)
+        if up?
             if !@pressed
                 menuselectup()
                 @pressed = true
             end
         end
         
-        if !(Gosu.button_down?(Gosu::KB_UP)||Gosu.button_down?(Gosu::KB_W)||Gosu.button_down?(Gosu::KB_DOWN)||Gosu.button_down?(Gosu::KB_S))
+        if !up?&&!down?
             @pressed = false
         end
     end
@@ -78,7 +80,7 @@ class BaseMenu
 
     private
     
-    def menuselectdown()
+    def menuselectup()
         if @menuid.nil?
             @menuid = 0
         else
@@ -90,7 +92,7 @@ class BaseMenu
         end
     end
 
-    def menuselectup()
+    def menuselectdown()
         if @menuid.nil?
             @menuid = @textItemsImgs.length-1
         else
