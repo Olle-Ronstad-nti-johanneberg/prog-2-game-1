@@ -23,4 +23,12 @@ class Highscore < BaseMenu
             return @states[@menuid]
         end
     end
+
+    def updateScore
+        @data = YAML.load_file('highscore.yaml')
+        @extratextImg = @data.each.map do |key|
+            (key["name"] + " : " + key["score"].to_s)
+        end.join("\n")
+        @extratextImg = Gosu::Image.from_text(@extratextImg,LEVELFONTSIZE, {bold: true, font: "impact"})
+    end
 end

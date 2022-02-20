@@ -17,15 +17,15 @@ class Main < Gosu::Window
         @startmenu = BaseMenu.new(self,"LUNAR GAME", "",
             {"Level Select"=>"levelMenu","Highscore"=>"highscore","Settings"=>"settingsMenu","Legal"=>"legal","Exit"=>"exit"},
             "startMenu")
-        @legalmenu = BaseMenu.new(self,"Leagal",Gosu::LICENSES,{back:"startMenu"},"Leagal")
-        @settingsmenu = BaseMenu.new(self,"Settings","SIKE! Here is current Gosu version: #{Gosu::VERSION}\n\n If you want settings, fight me! ( •_•)>⌐■-■",{back:"startMenu"},"settingsMenu")
+        @legalmenu = BaseMenu.new(self,"Leagal",Gosu::LICENSES,{Back:"startMenu"},"Leagal")
+        @settingsmenu = BaseMenu.new(self,"Settings","SIKE! Here is current Gosu version: #{Gosu::VERSION}\n\n If you want settings, fight me! ( •_•)>⌐■-■",{Back:"startMenu"},"settingsMenu")
         @highscoremenu = Highscore.new(self)
         @player = nil
         @state = "startMenu"
         @pressed = false
         @font = Gosu::Font.new(50, name: "Comic Sans MS")
         @score = nil
-        @highscore = YAML.load_file("highscore.yaml")
+        @currentHighscore = @highscore = YAML.load_file("highscore.yaml")
         @pauseMenu = nil
     end
 
@@ -54,6 +54,7 @@ class Main < Gosu::Window
             end
         
         when "highscore"
+            @highscoremenu.updateScore()
             @highscoremenu.update
             if enter? && @pressed == false
                 @state = @highscoremenu.newState
@@ -79,11 +80,18 @@ class Main < Gosu::Window
             @player.update
             if (@level.ground.angle(@player.img_x) < @player.angle+25 && @level.ground.angle(@player.img_x) > @player.angle-25) && @player.colliding
                 @score = 10000/(Math.sqrt(@player.vel_x**2 + @player.vel_y**2) + 1)
-                @pauseMenu = PauseMenu.new(self,"Landed","Curent level:\n#{@levelmenu.path["name"]}\nScore:\n#{@score.round()}\nHighscore:\n#{"nil"}",{"restart"=>"restart","exit"=>"levelMenu"},"paused")
+                if @highscore[@levelmenu.path["name"][-1].to_i-1]["score"] < @score.round
+                    @currentHighscore[@levelmenu.path["name"][-1].to_i-1]["score"] = @score.round
+                    f = File.open('highscore.yaml', 'w') do |x| 
+                        x.write @currentHighscore.to_yaml
+                    end
+                    updateScore()
+                end
+                @pauseMenu = PauseMenu.new(self,"Landed","Curent level:\n#{@levelmenu.path["name"]}\nScore:\n#{@score.round()}\nHighscore:\n#{@highscore[@levelmenu.path["name"][-1].to_i-1]["score"]}",{"Restart"=>"restart","Back"=>"levelMenu"},"paused")
                 @state = "paused"
 
             elsif !((@level.ground.angle(@player.img_x) > @player.angle+25 && @level.ground.angle(@player.img_x) < @player.angle-25)) && @player.colliding
-                @pauseMenu = PauseMenu.new(self,"game over","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{"nil"}",{"restart"=>"restart","exit"=>"levelMenu"},"paused")
+                @pauseMenu = PauseMenu.new(self,"Game Over","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{@highscore[@levelmenu.path["name"][-1].to_i-1]["score"]}",{"Restart"=>"restart","Back"=>"levelMenu"},"paused")
                 @state = "paused"
 
             end
@@ -116,6 +124,9 @@ class Main < Gosu::Window
         end
     end
 
+    def updateScore
+        @currentHighscore = @highscore = YAML.load_file("highscore.yaml")
+    end
 
     def draw
         case @state
