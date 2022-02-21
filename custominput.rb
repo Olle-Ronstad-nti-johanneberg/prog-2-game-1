@@ -18,5 +18,5 @@ def left?()
 end
 
 def enter?()
-    (button_down?(Gosu::MS_LEFT))||button_down?(Gosu::KB_RETURN)
+    (button_down?(Gosu::MS_LEFT))||button_down?(Gosu::KB_RETURN)||(button_down?(Gosu::KB_SPACE))
 end
