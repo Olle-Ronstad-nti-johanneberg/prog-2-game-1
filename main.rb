@@ -34,7 +34,6 @@ class Main < Gosu::Window
         when "startMenu"
             @startmenu.update
             if enter? && @pressed == false
-                p @startmenu.newState
                 @state = @startmenu.newState
                 @pressed = true
             end
