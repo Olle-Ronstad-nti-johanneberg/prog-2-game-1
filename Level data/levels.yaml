@@ -21,9 +21,9 @@
 
 - name: Level 4
   ground: Ground data/level1.csv
-  topColor: "#ffffffff"
-  botomColor: "#00000000"
-  rockIMG: assets/moon-rock-blur.png
+  topColor: "#ff25f812"
+  botomColor: "#ff1cb30e"
+  rockIMG: assets/yellow-rock.png
   grav: 0.1
 
 - name: Level 5
