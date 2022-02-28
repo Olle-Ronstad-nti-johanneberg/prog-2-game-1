@@ -45,7 +45,7 @@ class Main < Gosu::Window
                 if @levelmenu.path == "Back"
                     @state = "startMenu"
                 else
-                    @pauseMenu = PauseMenu.new(self,"game paused","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{"nil"}",{"restart"=>"restart","return"=>"level","exit"=>"levelMenu"},"paused")
+                    @pauseMenu = PauseMenu.new(self,"Game Paused","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{"nil"}",{"Restart"=>"restart","Return"=>"level","Exit"=>"levelMenu"},"Paused")
                     @level = Level.new(self, @levelmenu.path)
                     @player = Player.new(self.height, self.width, @level.ground, @level.data)
                     @state = "level"
@@ -106,7 +106,7 @@ class Main < Gosu::Window
             @pauseMenu.update
             if enter? && @pressed == false
                 if @pauseMenu.newState == "restart"
-                    @pauseMenu = PauseMenu.new(self,"game paused","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{"nil"}",{"restart"=>"restart","return"=>"level","exit"=>"levelMenu"},"paused")
+                    @pauseMenu = PauseMenu.new(self,"Game Paused","Curent level:\n#{@levelmenu.path["name"]}\nHighscore:\n#{"nil"}",{"Restart"=>"restart","Return"=>"level","Exit"=>"levelMenu"},"Paused")
                     @level = Level.new(self, @levelmenu.path)
                     @player = Player.new(self.height, self.width, @level.ground, @level.data)
                     @state = "level"
