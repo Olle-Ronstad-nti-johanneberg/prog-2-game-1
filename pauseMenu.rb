@@ -1,10 +1,10 @@
-require_relative 'basemenu.rb'
-require_relative 'HEXColor.rb'
+require_relative 'basemenu'
+require_relative 'HEXColor'
 
 class PauseMenu < BaseMenu
-    def initialize(window,maintext,extraText,textStateHash,selfstate)
-        super(window,maintext,extraText,textStateHash,selfstate)
-        @color = Hex("#9f000000")
+    def initialize(window, maintext, extraText, textStateHash, selfstate)
+        super(window, maintext, extraText, textStateHash, selfstate)
+        @color = Hex('#9f000000')
 
     end
     def draw()

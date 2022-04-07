@@ -5,8 +5,8 @@ require 'gosu'
 class Ground
     def initialize(window,file,topColor,botomColor)
         @window = window
-        @vertex = File.read(file).split(",").map do |vertex|
-            vertex = vertex.split(":")
+        @vertex = File.read(file).split(',').map do |vertex|
+            vertex = vertex.split(':')
             vertex[0] = vertex[0].to_f
             vertex[1] = vertex[1].to_f
             vertex

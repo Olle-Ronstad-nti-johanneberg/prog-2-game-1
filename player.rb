@@ -16,7 +16,7 @@ class Player
         @img_y = @vel_x = @vel_y = 0
         @angle = rand(0..90)
         @img_x = rand(0..width)
-        @gravity = data["grav"]
+        @gravity = data['grav']
         @scale_x = 2
         @scale_y = 2
         @height = height
@@ -32,12 +32,12 @@ class Player
 
     def update
         @vel_y += @gravity
-        @angle = @angle%360
+        @angle = @angle % 360
         if @img_y < 30
             @img_y = 30
             @vel_y = 0
         elsif colliding()
-            while @img_y > @height-@ground.groundY(@img_x) - 18
+            while @img_y > @height - @ground.groundY(@img_x) - 18
                 @img_y -= @vel_y * COLLISION_DETAIL
                 @img_x -= @vel_x * COLLISION_DETAIL
             end
@@ -48,14 +48,14 @@ class Player
         if @img_x < 20
             @img_x = 20
             @vel_x = 0
-        elsif (@img_x*@scale_x)-@width > @width-50
-            @img_x = @width-25
+        elsif (@img_x * @scale_x) - @width > @width - 50
+            @img_x = @width - 25
             @vel_x = 0
         end
     
         if Gosu.button_down? Gosu::KB_W or Gosu.button_down? Gosu::KB_UP
-            @vel_x += Math::sin(@angle*Math::PI/180)*THRUST
-            @vel_y += Math::cos(@angle*Math::PI/180)*-THRUST
+            @vel_x += Math::sin(@angle * Math::PI / 180) * THRUST
+            @vel_y += Math::cos(@angle * Math::PI / 180) * -THRUST
             @moving = true
         else
             @moving = false
