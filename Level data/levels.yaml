@@ -1,34 +1,34 @@
 - name: Level 1
   ground: Ground data/level1.csv
-  topColor: "#ffffffff"
-  botomColor: "#00000000"
+  top_color: "#ffffffff"
+  bottom_color: "#00000000"
   rockIMG: assets/moon-rock-blur.png
   grav: 0.1
 
 - name: Level 2
   ground: Ground data/level2.csv
-  topColor: "#ffe0af26"
-  botomColor: "#ff856905"
+  top_color: "#ffe0af26"
+  bottom_color: "#ff856905"
   rockIMG: assets/yellow-rock.png
   grav: 0.2
 
 - name: Level 3
   ground: Ground data/level3.csv
-  topColor: "#ffd13f13"
-  botomColor: "#ffd16513"
+  top_color: "#ffd13f13"
+  bottom_color: "#ffd16513"
   rockIMG: assets/mars-rock.png
   grav: 0.1
 
 - name: Level 4
   ground: Ground data/level1.csv
-  topColor: "#ff25f812"
-  botomColor: "#ff1cb30e"
+  top_color: "#ff25f812"
+  bottom_color: "#ff1cb30e"
   rockIMG: assets/yellow-rock.png
   grav: 0.1
 
 - name: Level 5
   ground: Ground data/level5.csv
-  topColor: "#ff26ced4"
-  botomColor: "#ff09356b"
+  top_color: "#ff26ced4"
+  bottom_color: "#ff09356b"
   rockIMG: assets/blue-spike-rocks.png
   grav: 0.1
