@@ -47,9 +47,9 @@ class Main < Gosu::Window
         if @levelmenu.path == 'Back'
           @state = 'startMenu'
         else
-          @pause_menu = PauseMenu.new(self, 'Game Paused', "Curent level:\n#{@levelmenu.path['name']}\nHighscore:\n#{'nil'}", { 'Restart' => 'restart', 'Return' => 'level', 'Exit' => 'levelMenu' }, 'Paused')
+          @pause_menu = PauseMenu.new(self, 'Game Paused', "Curent level:\n#{@levelmenu.path['name']}\nHighscore:\nnil", { 'Restart' => 'restart', 'Return' => 'level', 'Exit' => 'levelMenu' }, 'Paused')
           @level = Level.new(self, @levelmenu.path)
-          @player = Player.new(self.height, self.width, @level.ground, @level.data)
+          @player = Player.new(height, width, @level.ground, @level.data)
           @state = 'level'
         end
         @pressed = true
@@ -83,7 +83,7 @@ class Main < Gosu::Window
         @score = 10_000 / (Math.sqrt(@player.vel_x**2 + @player.vel_y**2) + 1)
         if @highscore[@levelmenu.path['name'][-1].to_i - 1]['score'] < @score.round
           @current_highscore[@levelmenu.path['name'][-1].to_i - 1]['score'] = @score.round
-          f = File.open('highscore.yaml', 'w') do |x|
+          File.open('highscore.yaml', 'w') do |x|
             x.write @current_highscore.to_yaml
           end
           update_score
@@ -106,9 +106,9 @@ class Main < Gosu::Window
       @pause_menu.update
       if enter? && @pressed == false
         if @pause_menu.new_state == 'restart'
-          @pause_menu = PauseMenu.new(self, 'Game Paused', "Curent level:\n#{@levelmenu.path['name']}\nHighscore:\n#{'nil'}", { 'Restart' => 'restart', 'Return' => 'level', 'Exit' => 'levelMenu' }, 'Paused')
+          @pause_menu = PauseMenu.new(self, 'Game Paused', "Curent level:\n#{@levelmenu.path['name']}\nHighscore:\nnil", { 'Restart' => 'restart', 'Return' => 'level', 'Exit' => 'levelMenu' }, 'Paused')
           @level = Level.new(self, @levelmenu.path)
-          @player = Player.new(self.height, self.width, @level.ground, @level.data)
+          @player = Player.new(height, width, @level.ground, @level.data)
           @state = 'level'
         else
           @state = @pause_menu.new_state
